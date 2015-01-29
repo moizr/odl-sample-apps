@@ -1,0 +1,8 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+    <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
+        <command>
+            <action class="com.cisco.controller.samples.commands.MakeCoffeeCommand">
+            </action>
+        </command>
+    </command-bundle>
+</blueprint>

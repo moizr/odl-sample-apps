@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<features name="coffee-maker-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+
+  <feature name='coffee-maker-model' version='${project.version}' description="Sample coffee-maker">
+    <feature version='${yangtools.version}'>odl-yangtools-common</feature>
+    <feature version='${yangtools.version}'>odl-yangtools-binding</feature>
+    <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+    <bundle>mvn:com.cisco.controller.samples/coffee-maker-model/${project.version}</bundle>
+    <bundle>mvn:com.cisco.controller.samples/coffee-maker-provider/${project.version}</bundle>
+    <bundle>mvn:com.cisco.controller.samples/coffee-maker-consumer/${project.version}</bundle>
+    <bundle>mvn:com.cisco.controller.samples/coffee-maker-commands/${project.version}</bundle>
+    <configfile finalname="${config.configfile.directory}/1000-coffee-maker-provider.xml">mvn:com.cisco.controller.samples/coffee-maker-provider/${project.version}/xml/config</configfile>
+    <configfile finalname="${config.configfile.directory}/1010-coffee-maker-consumer.xml">mvn:com.cisco.controller.samples/coffee-maker-consumer/${project.version}/xml/config</configfile>
+    <configfile finalname="${config.configfile.directory}/1020-coffee-maker-commands.xml">mvn:com.cisco.controller.samples/coffee-maker-commands/${project.version}/xml/config</configfile>
+  </feature>
+</features>
