@@ -1,0 +1,112 @@
+module coffeemakers {
+
+  namespace "http://cisco/coffeemakers";
+  prefix cm2;
+  import yang-ext {prefix ext; revision-date "2013-07-09";}
+
+  revision "2014-11-19" {
+            description
+                "Initial revision.";
+        }
+
+// General definitions
+
+grouping supplies {
+
+  leaf water-level {
+    config false;
+    type uint8;
+  }
+
+  leaf coffee-supply-level {
+    config false;
+    type uint8;
+  }
+
+}
+
+typedef cm-response-type {
+    type enumeration {
+        enum done { value 0;}
+        enum error { value 1;}
+    }
+}
+
+identity coffee-maker-context {
+    description "reference to identify a coffee-maker instance";
+}
+
+
+
+// Data definition
+
+ container coffeemakers {
+  description "This is a sample ODL Coffee Maker model";
+
+
+  list coffeemaker {
+  key "owner";
+  ext:context-instance "coffee-maker-context";
+// Configuration data
+  leaf owner {
+    type string;
+  }
+
+// Operational data
+  uses supplies;
+
+
+  list coffee-log {
+    config false;
+    key type;
+
+    leaf type {
+      type string {
+        pattern '[a-zA-Z].*';
+      }
+    }
+    leaf last-make-time {
+      type string;
+    }
+  }
+  }
+}
+
+// RPC Definition
+
+  rpc make-coffee {
+     description
+       "Request to make coffee";
+
+
+     input {
+       leaf id {
+   	  ext:context-reference "coffee-maker-context";
+	  type instance-identifier;
+	  description "A reference to a particular node.";
+       }
+       leaf coffee-type {
+             type string;
+             mandatory true;
+             }
+
+     } //input
+     output {
+
+    leaf cm-response {
+        type cm-response-type;
+        mandatory true;
+        }
+    leaf additional-info {
+        type string;
+       }
+     } //output
+
+  }
+
+// Notification definition
+
+  notification cm-supplies-event {
+    uses supplies;
+  }
+}
